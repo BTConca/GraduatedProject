@@ -17,6 +17,24 @@ module.exports = {
       {
         test: /\.(sa|c)ss$/,
         use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 25000
+          }
+        }
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[path][name].[hash].[ext]"
+          }
+        }
       }
     ]
   },
