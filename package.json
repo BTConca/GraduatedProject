@@ -1,0 +1,11 @@
+{
+  "name": "lms-graduateing-project",
+  "version": "1.0.0",
+  "description": "US graduating project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vankhai",
+  "license": "ISC"
+}
