@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
-
 import logo from "assets/img/reactlogo.png";
 
 class Sidebar extends Component {
@@ -44,13 +42,12 @@ class Sidebar extends Component {
             href="https://www.creative-tim.com?ref=lbd-sidebar"
             className="simple-text logo-normal"
           >
-            Creative Tim
+            LMS Quizz
           </a>
         </div>
         <div className="sidebar-wrapper">
           <ul className="nav">
-            {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
-            <li>
+            <li className="active active-pro">
               <a className="nav-link" href="#">
                 <i className="pe-7s-news-paper" />
                 <p>Create Course</p>

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import FormTexteditor from "components/Form/Texteditor/Texteditor.js";
 import Sidebar from "components/Sidebar/Sidebar";
 import { style } from "variables/Variables.jsx";
 import NotificationSystem from "react-notification-system";
-
+import AdminNavbar from "components/Navbars/AdminNavbar";
 import image from "assets/img/sidebar-3.jpg";
+import ScreenEditCourse from "components/Screens/EditCourse/EditCourse.js";
 
 class App extends Component {
   constructor(props) {
@@ -115,9 +115,9 @@ class App extends Component {
           color={this.state.color}
           hasImage={this.state.hasImage}
         />
-        <h1>My React App!</h1>
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <FormTexteditor></FormTexteditor>
+          <AdminNavbar {...this.props} brandText="Create Courses" />
+          <ScreenEditCourse />
         </div>
       </div>
     );
