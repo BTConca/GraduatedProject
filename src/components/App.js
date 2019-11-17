@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import FormTexteditor from "components/Form/Texteditor/Texteditor.js";
-import "styles/App.css";
 import Sidebar from "components/Sidebar/Sidebar";
-import image from "assets/img/sidebar-3.jpg";
 import { style } from "variables/Variables.jsx";
 import NotificationSystem from "react-notification-system";
+
+import image from "assets/img/sidebar-3.jpg";
 
 class App extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class App extends Component {
     var level;
     switch (color) {
       case 1:
-        level = "sucess";
+        level = "success";
         break;
       case 2:
         level = "warning";
@@ -80,19 +80,23 @@ class App extends Component {
       case 4:
         level = "info";
         break;
+      default:
+        break;
     }
     _notificationSystem.addNotification({
       title: <span data-notify="icon" className="pe-7s-gift" />,
       message: (
         <div>
-          Welcome to our <b>house</b>
+          Welcome to <b>Boomer World</b> - a beautiful website using
+          gamification to training every web developer.
         </div>
       ),
       level: level,
-      position: position,
+      position: "tr",
       autoDismiss: 15
     });
   }
+
   componentDidUpdate(e) {
     if (
       window.innerWidth < 993 &&
@@ -101,12 +105,20 @@ class App extends Component {
       document.documentElement.classList.toggle("nav-open");
     }
   }
-
   render() {
     return (
       <div className="wrapper">
-        ><h1>My React App!</h1>
-        <FormTexteditor></FormTexteditor>
+        <NotificationSystem ref="notificationSystem" style={style} />
+        <Sidebar
+          {...this.props}
+          image={this.state.image}
+          color={this.state.color}
+          hasImage={this.state.hasImage}
+        />
+        <h1>My React App!</h1>
+        <div id="main-panel" className="main-panel" ref="mainPanel">
+          <FormTexteditor></FormTexteditor>
+        </div>
       </div>
     );
   }

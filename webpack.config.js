@@ -15,26 +15,26 @@ module.exports = {
         use: ["babel-loader"]
       },
       {
-        test: /\.(sa|c)ss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(jpg|png)$/,
         use: {
-          loader: "url-loader",
-          options: {
-            limit: 25000
-          }
+          loader: "url-loader"
         }
       },
       {
-        test: /\.(jpg|png)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[path][name].[hash].[ext]"
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
           }
-        }
+        ]
       }
     ]
   },

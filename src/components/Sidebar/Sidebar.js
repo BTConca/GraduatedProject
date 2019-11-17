@@ -1,23 +1,6 @@
-/*!
-
-=========================================================
-* Light Bootstrap Dashboard React - v1.3.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component } from "react";
 
-import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.js";
+import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
 import logo from "assets/img/reactlogo.png";
 
@@ -28,9 +11,7 @@ class Sidebar extends Component {
       width: window.innerWidth
     };
   }
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
+
   updateDimensions() {
     this.setState({ width: window.innerWidth });
   }
@@ -49,9 +30,7 @@ class Sidebar extends Component {
         data-color={this.props.color}
         data-image={this.props.image}
       >
-        {this.props.hasImage ? (
-          <div className="sidebar-background" style={sidebarBackground} />
-        ) : null}
+        <div className="sidebar-background" style={sidebarBackground} />
         <div className="logo">
           <a
             href="https://www.creative-tim.com?ref=lbd-sidebar"
@@ -71,25 +50,12 @@ class Sidebar extends Component {
         <div className="sidebar-wrapper">
           <ul className="nav">
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
-            {this.props.routes.map((prop, key) => {
-              if (!prop.redirect)
-                return (
-                  <li
-                    className={
-                      prop.upgrade
-                        ? "active active-pro"
-                        : this.activeRoute(prop.layout + prop.path)
-                    }
-                    key={key}
-                  >
-                    <a className="nav-link" href="#">
-                      <i className={prop.icon} />
-                      <p>{prop.name}</p>
-                    </a>
-                  </li>
-                );
-              return null;
-            })}
+            <li>
+              <a className="nav-link" href="#">
+                <i className="pe-7s-news-paper" />
+                <p>Create Course</p>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
