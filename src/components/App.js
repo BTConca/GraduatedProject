@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Sidebar from "components/Sidebar/Sidebar";
-import { style } from "variables/Variables.jsx";
+import { style } from "variables/Variables.js";
 import NotificationSystem from "react-notification-system";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import image from "assets/img/sidebar-3.jpg";
