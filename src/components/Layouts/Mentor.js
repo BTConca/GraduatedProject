@@ -1,12 +1,15 @@
 import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+
 import Sidebar from "components/Sidebar/Sidebar";
 import { style } from "variables/Variables.js";
 import NotificationSystem from "react-notification-system";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import image from "assets/img/sidebar-3.jpg";
-import ScreenEditCourse from "components/Screens/EditCourse/EditCourse.js";
 
-class App extends Component {
+import routes from "routes.js";
+
+class Mentor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +51,26 @@ class App extends Component {
       autoDismiss: 15
     });
   };
+
+  getRoutes = routes => {
+    return routes
+      ? routes.map((prop, key) => {
+          if (prop.layout === "/mentor") {
+            return (
+              <Route
+                path={prop.layout + prop.path}
+                render={routeProps => <prop.component {...routeProps} />}
+                exact={prop.exact}
+                key={key}
+              />
+            );
+          } else {
+            return null;
+          }
+        })
+      : console.log("Can't get routes");
+  };
+
   handleImageClick = image => {
     this.setState({ image: image });
   };
@@ -57,54 +80,7 @@ class App extends Component {
   handleHasImage = hasImage => {
     this.setState({ hasImage: hasImage });
   };
-  handleFixedClick = () => {
-    if (this.state.fixedClasses === "dropdown")
-      this.setState({ fixedClasses: "dropdown show-dropdown open" });
-    else this.setState({ fixedClasses: "dropdown" });
-  };
-  componentDidMount() {
-    this.setState({ _notificationSystem: this.refs.notificationSystem });
-    var _notificationSystem = this.refs.notificationSystem;
-    var color = Math.floor(Math.random() * 4 + 1);
-    var level;
-    switch (color) {
-      case 1:
-        level = "success";
-        break;
-      case 2:
-        level = "warning";
-        break;
-      case 3:
-        level = "error";
-        break;
-      case 4:
-        level = "info";
-        break;
-      default:
-        break;
-    }
-    _notificationSystem.addNotification({
-      title: <span data-notify="icon" className="pe-7s-gift" />,
-      message: (
-        <div>
-          Welcome to <b>Boomer World</b> - a beautiful website using
-          gamification to training every web developer.
-        </div>
-      ),
-      level: level,
-      position: "tr",
-      autoDismiss: 15
-    });
-  }
 
-  componentDidUpdate(e) {
-    if (
-      window.innerWidth < 993 &&
-      document.documentElement.className.indexOf("nav-open") !== -1
-    ) {
-      document.documentElement.classList.toggle("nav-open");
-    }
-  }
   render() {
     return (
       <div className="wrapper">
@@ -117,11 +93,11 @@ class App extends Component {
         />
         <div id="main-panel" className="main-panel" ref="mainPanel">
           <AdminNavbar {...this.props} brandText="Create Courses" />
-          <ScreenEditCourse />
+          <Switch>{this.getRoutes(routes)}</Switch>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default Mentor;

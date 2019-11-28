@@ -29,11 +29,10 @@ const useAxios = (url, setData) => {
   }, [url]);
 };
 
-class ScreenEditCourse extends Component {
+class EditCourse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseId: "",
       name: "",
       description: "",
       data: ""
@@ -43,11 +42,11 @@ class ScreenEditCourse extends Component {
   handleSumit = async event => {
     event.preventDefault();
     const course = {
-      id: this.state.courseId,
       name: this.state.name,
       description: this.state.description,
       data: this.state.data
     };
+
     const respone = await API.post("courses", { course }).then(res => {
       console.log(res);
       console.log(res.data);
@@ -142,4 +141,4 @@ class ScreenEditCourse extends Component {
   }
 }
 
-export default ScreenEditCourse;
+export default EditCourse;
