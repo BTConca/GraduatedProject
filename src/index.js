@@ -9,6 +9,7 @@ import "assets/css/demo.css";
 import "assets/css/pe-icon-7-stroke.css";
 
 import Mentor from "components/Layouts/Mentor.js";
+import User from "components/Layouts/User.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -17,7 +18,11 @@ ReactDOM.render(
         path="/mentor"
         render={routeProps => <Mentor {...routeProps} />}
       ></Route>
-      <Redirect from="/" to="mentor/editcourse" />
+      <Route
+        path="/user"
+        render={routeProps => <User {...routeProps} />}
+      ></Route>
+      <Redirect from="/" to="user/home" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
