@@ -1,33 +1,27 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Button from "components/CustomButton/CustomButton.js";
 import Card from "components/Card/Card.js";
 import axios from "axios";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import API from "utils/API";
+import GFMDataProcessor from "@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor";
+const parse = require("html-react-parser");
 
-const useAxios = (url, setData) => {
-  useEffect(() => {
-    () => {
-      let mounted = true;
-
-      const loadData = async () => {
-        const result = await axios.get(url);
-        if (mounted) {
-          setData(result.data);
-        }
-      };
-    };
-
-    loadData();
-
-    return () => {
-      mounted = false;
-    };
-  }, [url]);
+var stringsSomeWithHtml = str => {
+  return <Fragment>{str}</Fragment>;
 };
+
+function Oembed() {
+  return <p>this is oembed</p>;
+}
+
+//   function Markdown( editor ) {
+//     editor.data.processor = new GFMDataProcessor();
+// }
 
 class EditCourse extends Component {
   constructor(props) {
@@ -35,7 +29,8 @@ class EditCourse extends Component {
     this.state = {
       name: "",
       description: "",
-      data: ""
+      data: "<p>Let create your course<p>",
+      editor: ClassicEditor
     };
   }
 
@@ -68,6 +63,7 @@ class EditCourse extends Component {
   };
 
   render() {
+    let toHtml = parse(this.state.data.toString());
     return (
       <div className="content">
         <Container fluid>
@@ -103,11 +99,14 @@ class EditCourse extends Component {
                         </Form.Text>
                       </Form.Group>
                     </Form>
+                    <p>sdfdsf</p>
+                    <p>sdfdsf</p>
+                    {toHtml}
                     <div className="form-texteditor">
                       <h2>Content</h2>
                       <CKEditor
-                        editor={ClassicEditor}
-                        data={"<p>Let create your course<p>"}
+                        editor={this.state.editor}
+                        data={this.state.data}
                         onInit={editor => {
                           console.log("editor is ready to use", editor);
                         }}
@@ -134,7 +133,6 @@ class EditCourse extends Component {
               ></Card>
             </Col>
           </Row>
-          >
         </Container>
       </div>
     );
