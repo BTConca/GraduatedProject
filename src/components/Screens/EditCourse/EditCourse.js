@@ -1,27 +1,36 @@
 import React, { Component, Fragment } from "react";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import { Container, Row, Col, Form } from "react-bootstrap";
+
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
+import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
+import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
+import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+import GFMDataProcessor from "@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor";
+
+
 import Button from "components/CustomButton/CustomButton.js";
 import Card from "components/Card/Card.js";
 import axios from "axios";
 import PropTypes, { func } from "prop-types";
 import API from "utils/API";
-import GFMDataProcessor from "@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor";
-const parse = require("html-react-parser");
 
+const ReactMarkdown = require("react-markdown");
+const 
 var stringsSomeWithHtml = str => {
   return <Fragment>{str}</Fragment>;
 };
 
-function Oembed() {
-  return <p>this is oembed</p>;
+//Create Plug-in Markdown for getting output in markdown formation
+function Markdown(editor) {
+  editor.data.processor = new GFMDataProcessor();
 }
 
-//   function Markdown( editor ) {
-//     editor.data.processor = new GFMDataProcessor();
-// }
+const editorConfiguration = {
+  plugins: [Markdown, Essentials, Bold, Italic, Paragraph],
+  toolbar: ["bold", "italic"]
+};
 
 class EditCourse extends Component {
   constructor(props) {
@@ -63,7 +72,6 @@ class EditCourse extends Component {
   };
 
   render() {
-    let toHtml = parse(this.state.data.toString());
     return (
       <div className="content">
         <Container fluid>
@@ -99,13 +107,12 @@ class EditCourse extends Component {
                         </Form.Text>
                       </Form.Group>
                     </Form>
-                    <p>sdfdsf</p>
-                    <p>sdfdsf</p>
-                    {toHtml}
+                    <ReactMarkdown source={this.state.data} />
                     <div className="form-texteditor">
                       <h2>Content</h2>
                       <CKEditor
                         editor={this.state.editor}
+                        config={editorConfiguration}
                         data={this.state.data}
                         onInit={editor => {
                           console.log("editor is ready to use", editor);
