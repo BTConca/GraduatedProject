@@ -1,13 +1,12 @@
-//Utilities 
+//Utilities
 
 @import "mixins/transparency";
 @import "mixins/vendor-prefixes";
 
-
 //Components
 
 @import "mixins/buttons";
-@import "mixins/inputs";
+@import "mixins/mixininputs";
 @import "mixins/labels";
 @import "mixins/tabs";
 
@@ -18,5 +17,3 @@
 @import "mixins/morphing-buttons";
 
 @import "mixins/cards";
-
-@import "mixins/chartist";

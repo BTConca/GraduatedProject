@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-const ReactMarkdown = require("react-markdown");
+import PropTypes from "prop-types";
 var parse = require("html-react-parser");
 
 import CKEditor from "@ckeditor/ckeditor5-react";
@@ -14,8 +14,8 @@ import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
 
 import Button from "components/CustomButton/CustomButton.js";
 import Card from "components/Card/Card.js";
+import Quizzes from "components/Quizzes/Quizzes.js";
 import axios from "axios";
-import PropTypes, { func } from "prop-types";
 import API from "utils/API";
 
 var IFRAME_SRC = "//cdn.iframe.ly/api/iframe";
@@ -74,6 +74,10 @@ const editorConfiguration = {
   }
 };
 
+//
+//Context API
+//end
+
 class EditCourse extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +86,8 @@ class EditCourse extends Component {
       description: "",
       data: "<p>Let create your course<p>",
       editor: ClassicEditor,
-      toHtml: ""
+      toHtml: "",
+      question: []
     };
   }
 
@@ -97,16 +102,7 @@ class EditCourse extends Component {
   handleSumit = event => {
     //async
     event.preventDefault();
-    // const course = {
-    //   name: this.state.name,
-    //   description: this.state.description,
-    //   data: this.state.data
-    // };
 
-    // const respone = await API.post("courses", { course }).then(res => {
-    //   console.log(res);
-    //   console.log(res.data);
-    // });
     var a = parse(this.state.data);
     this.setState({ toHtml: a });
     console.log(a);
@@ -135,22 +131,6 @@ class EditCourse extends Component {
   }
 
   componentDidUpdate() {
-    // document.querySelectorAll("div[data-oembed-url]").forEach(element => {
-    //   // Discard the static media preview from the database (empty the <div data-oembed-url="...">).
-    //   while (element.firstChild) {
-    //     element.removeChild(element.firstChild);
-    //   }
-
-    //   // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
-    //   // to discover the media.
-    //   const anchor = document.createElement("a");
-
-    //   anchor.setAttribute("href", element.dataset.oembedUrl);
-    //   anchor.className = "embedly-card";
-
-    //   element.appendChild(anchor);
-    // });
-
     document.querySelectorAll("figure").forEach(element => {
       // Discard the static media preview from the database (empty the <div data-oembed-url="...">).
       element.removeAttribute("class");
@@ -212,18 +192,22 @@ class EditCourse extends Component {
                         onFocus={(event, editor) => {}}
                       />
                     </div>
+
                     <Button
                       varian="info"
-                      pullRight
                       fill
+                      floatRight
                       type="submit"
                       onClick={this.handleSumit}
                     >
                       Save
                     </Button>
+                    <br />
+                    <br />
+                    <Quizzes />
                   </div>
                 }
-              ></Card>
+              />
             </Col>
           </Row>
         </Container>
