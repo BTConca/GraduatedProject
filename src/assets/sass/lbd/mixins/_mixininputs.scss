@@ -3,9 +3,9 @@
   height: $height;
 }
 
-@mixin placeholder($color, $opacity) {
+@mixin placeholder($color) {
   color: $color;
-  @include opacity($opacity);
+  @include opacity(1);
 }
 
 @mixin light-form() {

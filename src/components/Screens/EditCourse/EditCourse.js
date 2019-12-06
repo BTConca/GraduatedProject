@@ -192,7 +192,7 @@ class EditCourse extends Component {
                         onFocus={(event, editor) => {}}
                       />
                     </div>
-
+                    <Quizzes />
                     <Button
                       varian="info"
                       fill
@@ -202,9 +202,6 @@ class EditCourse extends Component {
                     >
                       Save
                     </Button>
-                    <br />
-                    <br />
-                    <Quizzes />
                   </div>
                 }
               />

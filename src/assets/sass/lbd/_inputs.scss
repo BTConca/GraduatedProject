@@ -1,11 +1,11 @@
 .form-control::-moz-placeholder {
-  @include placeholder($medium-gray, 1);
+  @include placeholder($medium-gray);
 }
 .form-control::-webkit-input-placeholder {
-  @include placeholder($medium-dark-gray, 1);
+  @include placeholder($medium-dark-gray);
 }
 .form-control:-ms-input-placeholder {
-  @include placeholder($medium-gray, 1);
+  @include placeholder($medium-dark-gray);
 }
 
 .form-control {
@@ -19,14 +19,6 @@
     $height-base
   );
   @include box-shadow(none);
-
-  &:focus {
-    background-color: $white-bg;
-    border: 1px solid $medium-dark-gray;
-    @include box-shadow(none);
-    outline: 0 !important;
-    color: #333333;
-  }
 
   .has-success &,
   .has-error &,
