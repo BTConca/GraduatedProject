@@ -9,9 +9,23 @@
   }
 
   .card-quizzes {
-    border: aquamarine;
+    .form-label {
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      color: $black-color;
+      margin-bottom: 0px;
+    }
+    .input-group {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
   }
   .form-texteditor {
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
   }
 
   .iframely-responsive {
@@ -85,7 +99,7 @@
     padding: 15px 15px 0;
   }
   .category,
-  form-label {
+  label {
     font-size: $font-size-base;
     font-weight: $font-weight-normal;
     color: $dark-gray;
@@ -96,8 +110,9 @@
     }
   }
 
-  form-label {
-    font-size: $font-size-h5;
+  .form-label {
+    font-size: $font-size-h4;
+    color: $black-color;
     margin-bottom: 5px;
     text-transform: uppercase;
   }

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import {Navbar, Nav} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 export class NavbarsUser extends Component {
   render() {
     return (
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="testbg">
         <Navbar.Brand href="#home">Khoa mat lozz</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -22,5 +22,4 @@ export class NavbarsUser extends Component {
     );
   }
 }
-
 export default NavbarsUser;

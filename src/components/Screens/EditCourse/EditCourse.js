@@ -74,10 +74,6 @@ const editorConfiguration = {
   }
 };
 
-//
-//Context API
-//end
-
 class EditCourse extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +83,16 @@ class EditCourse extends Component {
       data: "<p>Let create your course<p>",
       editor: ClassicEditor,
       toHtml: "",
-      question: []
+      quizzes: [
+        {
+          question: "This is example",
+          answer: "A",
+          answeroptions1: "Deadpool",
+          answeroptions2: "Home Alone",
+          answeroptions3: "Danmachi",
+          answeroptions4: "Avatar"
+        }
+      ]
     };
   }
 
@@ -100,29 +105,67 @@ class EditCourse extends Component {
   };
 
   handleSumit = event => {
-    //async
     event.preventDefault();
 
+    // Parser translate html string to html by using Reac.createElement
+
+    const data = {
+      CourseName: "vankhai",
+      Description: "test",
+      Rate: 5,
+      Term: 1997,
+      Certification: "test",
+      Status: "test"
+    };
+    axios
+      .post("https://gamifi.herokuapp.com/courses", data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     var a = parse(this.state.data);
     this.setState({ toHtml: a });
     console.log(a);
   };
 
+  // Add quizz button
+  handleAddQuizz = () => {
+    e.preventDefault();
+    const quizz = {
+      question: "",
+      answer: "",
+      answeroptions1: "",
+      answeroptions2: "",
+      answeroptions3: "",
+      answeroptions4: ""
+    };
+
+    this.setState(state => {
+      const quizzes = state.quizzes.concat(quizz);
+
+      return {
+        quizzes
+      };
+    });
+  };
+
+  handleChange = e => {
+    const name = e.target.name;
+    this.setState({ [name]: e.target.value });
+  };
+
+  //editor handler
   handleOnchange = (event, editor) => {
     this.setState({ data: editor.getData() });
-    const data = this.state.data;
-    console.log(data);
-  };
-
-  handleNameOnchange = event => {
-    this.setState({ name: event.target.value });
-  };
-
-  handleDescriptonOnChange = event => {
-    this.setState({ description: event.target.value });
+    // const data = this.state.data;
+    // console.log(data);
   };
 
   componentDidMount() {
+    console.log(this.state.quizzes[0]);
+
     if (iframely) {
       console.log("iframely work");
     }
@@ -141,7 +184,7 @@ class EditCourse extends Component {
   }
   render() {
     return (
-      <div className="content">
+      <section className="content">
         <Container fluid>
           <Row>
             <Col sm={8}>
@@ -153,35 +196,30 @@ class EditCourse extends Component {
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>Course Name</Form.Label>
                         <Form.Control
+                          name="name"
                           type="text"
                           placeholder="Enter name"
                           value={this.state.name}
-                          onChange={this.handleNameOnchange}
+                          onChange={this.handleChange}
                         />
-                        <Form.Text className="text-muted">
-                          We'll never share your email with anyone else.
-                        </Form.Text>
                       </Form.Group>
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>Short Description</Form.Label>
                         <Form.Control
-                          type="text"
+                          name="description"
+                          as="textarea"
+                          row="3"
                           placeholder="Enter your description"
                           value={this.state.description}
-                          onChange={this.handleDescriptonOnChange}
+                          onChange={this.handleChange}
                         />
                         <Form.Text className="text-muted">
-                          We'll never share your email with anyone else.
+                          Your description will be showed on course's background
                         </Form.Text>
                       </Form.Group>
                     </Form>
-                    {this.state.toHtml}
-                    {/* {parse(
-                      '<figure><div data-oembed-url="https://www.youtube.com/watch?v=E1OunoCyuhY"><div class="iframely-embed"><div class="iframely-responsive"><iframe src="//cdn.iframe.ly/api/iframe?app=1&amp;api_key=9c95afb9bf715f866e621a&amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DE1OunoCyuhY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></div></figure>'
-                    )} */}
-                    {/* <div dangerouslySetInnerHTML={this.createMarkup()} /> */}
                     <div className="form-texteditor">
-                      <h2>Content</h2>
+                      <h5 className="form-label">Content</h5>
                       <CKEditor
                         editor={this.state.editor}
                         config={editorConfiguration}
@@ -192,7 +230,35 @@ class EditCourse extends Component {
                         onFocus={(event, editor) => {}}
                       />
                     </div>
-                    <Quizzes />
+
+                    <h5 className="form-label">Quizzes</h5>
+                    <div className="card-quizzes">
+                      {this.state.quizzes[0]
+                        ? this.state.quizzes[0]["question"]
+                        : "Null"}
+                      {this.state.quizzes.map((value, index) => (
+                        <div>
+                          <Quizzes
+                            key={index}
+                            index={index + 1}
+                            answer={value.answer}
+                            question={value.question}
+                            answeroptions1={value.answeroptions1}
+                            answeroptions2={value.answeroptions2}
+                            answeroptions3={value.answeroptions3}
+                            answeroptions4={value.answeroptions4}
+                            addNewQuizz={this.handleAddQuizz}
+                          />
+                        </div>
+                      ))}
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={this.handleAddQuizz}
+                      >
+                        + ADD
+                      </Button>
+                    </div>
                     <Button
                       varian="info"
                       fill
@@ -208,7 +274,7 @@ class EditCourse extends Component {
             </Col>
           </Row>
         </Container>
-      </div>
+      </section>
     );
   }
 }
