@@ -83,17 +83,9 @@ class EditCourse extends Component {
       data: "<p>Let create your course<p>",
       editor: ClassicEditor,
       toHtml: "",
-      quizzes: [
-        {
-          question: "This is example",
-          answer: "A",
-          answeroptions1: "Deadpool",
-          answeroptions2: "Home Alone",
-          answeroptions3: "Danmachi",
-          answeroptions4: "Avatar"
-        }
-      ]
+      quizzes: []
     };
+    this.child = React.createRef();
   }
 
   toHtml = () => {
@@ -106,32 +98,31 @@ class EditCourse extends Component {
 
   handleSumit = event => {
     event.preventDefault();
+    this.child.current.handleAddQuizz();
 
-    // Parser translate html string to html by using Reac.createElement
-
-    const data = {
-      CourseName: "vankhai",
-      Description: "test",
-      Rate: 5,
-      Term: 1997,
-      Certification: "test",
-      Status: "test"
-    };
-    axios
-      .post("https://gamifi.herokuapp.com/courses", data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    var a = parse(this.state.data);
-    this.setState({ toHtml: a });
-    console.log(a);
+    // const data = {
+    //   CourseName: "vankhai",
+    //   Description: "test",
+    //   Rate: 5,
+    //   Term: 1997,
+    //   Certification: "test",
+    //   Status: "test"
+    // };
+    // axios
+    //   .post("https://gamifi.herokuapp.com/courses", data)
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+    // var a = parse(this.state.data);
+    // this.setState({ toHtml: a });
+    // console.log(a);
   };
 
   // Add quizz button
-  handleAddQuizz = () => {
+  handleAddQuizz = e => {
     e.preventDefault();
     const quizz = {
       question: "",
@@ -149,6 +140,31 @@ class EditCourse extends Component {
         quizzes
       };
     });
+  };
+
+  handleSaveQuizz = input => {
+    this.setState(state => {
+      const quizzes = state.quizzes.map((quizz, index) => {
+        console.log(index, input.index);
+        quizz => {};
+        if (index === input.index - 1) {
+          quizz.question = input.question;
+          quizz.answer = input.answer;
+          quizz.answeroptions1 = input.answeroptions1;
+          quizz.answeroptions2 = input.answeroptions2;
+          quizz.answeroptions3 = input.answeroptions3;
+          quizz.answeroptions4 = input.answeroptions4;
+          return quizz;
+        } else return quizz;
+      });
+
+      console.log("under are array quizzes");
+      console.log(quizzes);
+      return {
+        quizzes
+      };
+    });
+    console.log(this.state.quizzes);
   };
 
   handleChange = e => {
@@ -233,22 +249,27 @@ class EditCourse extends Component {
 
                     <h5 className="form-label">Quizzes</h5>
                     <div className="card-quizzes">
-                      {this.state.quizzes[0]
+                      {/* {this.state.quizzes[0]
                         ? this.state.quizzes[0]["question"]
-                        : "Null"}
+                        : "Null"} */}
                       {this.state.quizzes.map((value, index) => (
                         <div>
-                          <Quizzes
-                            key={index}
-                            index={index + 1}
-                            answer={value.answer}
-                            question={value.question}
-                            answeroptions1={value.answeroptions1}
-                            answeroptions2={value.answeroptions2}
-                            answeroptions3={value.answeroptions3}
-                            answeroptions4={value.answeroptions4}
-                            addNewQuizz={this.handleAddQuizz}
-                          />
+                          {value ? (
+                            <Quizzes
+                              ref={this.child}
+                              key={index}
+                              index={index + 1}
+                              answer={value.answer}
+                              question={value.question}
+                              answeroptions1={value.answeroptions1}
+                              answeroptions2={value.answeroptions2}
+                              answeroptions3={value.answeroptions3}
+                              answeroptions4={value.answeroptions4}
+                              addNewQuizz={this.handleSaveQuizz}
+                            />
+                          ) : (
+                            "this is not good"
+                          )}
                         </div>
                       ))}
                       <Button
