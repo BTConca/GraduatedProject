@@ -14,53 +14,49 @@ import Button from "components/CustomButton/CustomButton.js";
 // Document https://www.robinwieruch.de/react-state-array-add-update-remove
 
 class Quizzes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDisable: false,
-      question: this.props.question,
-      answer: this.props.answer,
-      answeroptions1: this.props.answeroptions1,
-      answeroptions2: this.props.answeroptions2,
-      answeroptions3: this.props.answeroptions3,
-      answeroptions4: this.props.answeroptions4
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     isDisable: false,
+  //     question: this.props.question,
+  //     answer: this.props.answer,
+  //     answeroptions1: this.props.answeroptions1,
+  //     answeroptions2: this.props.answeroptions2,
+  //     answeroptions3: this.props.answeroptions3,
+  //     answeroptions4: this.props.answeroptions4
+  //   };
+  // }
 
-  handleAddQuizz = () => {
-    const quizz = {
-      question: this.state.question,
-      answer: this.state.answer,
-      index: this.props.index,
-      answeroptions1: this.state.answeroptions1,
-      answeroptions2: this.state.answeroptions2,
-      answeroptions3: this.state.answeroptions3,
-      answeroptions4: this.state.answeroptions4
-    };
+  // handleAddQuizz = () => {
+  //   const quizz = {
+  //     question: this.state.question,
+  //     answer: this.state.answer,
+  //     index: this.props.index,
+  //     answeroptions1: this.state.answeroptions1,
+  //     answeroptions2: this.state.answeroptions2,
+  //     answeroptions3: this.state.answeroptions3,
+  //     answeroptions4: this.state.answeroptions4
+  //   };
 
-    console.log("tim pa thi");
-    this.props.addNewQuizz(quizz);
-  };
+  //   console.log("tim pa thi");
+  //   this.props.addNewQuizz(quizz);
+  // };
 
   handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({ [name]: value });
+    this.props.onInputChange(e.target.name, e.target.value, this.props.index);
   };
 
   handleDropdownItemClick = (key, e) => {
-    this.setState({
-      answer: key
-    });
+    this.props.onAnswerChange(key, this.props.index);
   };
 
   render() {
-    // const question = this.props.question;
-    // const answer = this.props.answer;
-    // const answeroptions1 = this.props.answeroptions1;
-    // const answeroptions2 = this.props.answeroptions2;
-    // const answeroptions3 = this.props.answeroptions3;
-    // const answeroptions4 = this.props.answeroptions4;
+    const question = this.props.question;
+    const answer = this.props.answer;
+    const answeroptions1 = this.props.answeroptions1;
+    const answeroptions2 = this.props.answeroptions2;
+    const answeroptions3 = this.props.answeroptions3;
+    const answeroptions4 = this.props.answeroptions4;
 
     return (
       <div className="content">
@@ -71,11 +67,10 @@ class Quizzes extends Component {
 
               <Form.Control
                 name="question"
-                readOnly={this.state.isDisable}
                 as="textarea"
                 row="2"
                 placeholder="Enter Question"
-                value={this.state.question}
+                value={this.props.question}
                 onChange={this.handleChange}
               />
             </Form.Row>
@@ -84,11 +79,10 @@ class Quizzes extends Component {
                 A
                 <Form.Control
                   name="answeroptions1"
-                  readOnly={this.props.isDisable}
                   as="textarea"
                   row="1"
                   placeholder="Enter Answer option"
-                  value={this.state.answeroptions1}
+                  value={this.props.answeroptions1}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -96,11 +90,10 @@ class Quizzes extends Component {
                 B
                 <Form.Control
                   name="answeroptions2"
-                  readOnly={this.state.isDisable}
                   as="textarea"
                   row="1"
                   placeholder="Enter Answer option"
-                  value={this.state.answeroptions2}
+                  value={this.props.answeroptions2}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -110,11 +103,10 @@ class Quizzes extends Component {
                 C
                 <Form.Control
                   name="answeroptions3"
-                  readOnly={this.state.isDisable}
                   as="textarea"
                   row="1"
                   placeholder="Enter Answer option"
-                  value={this.state.answeroptions3}
+                  value={this.props.answeroptions3}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -122,11 +114,10 @@ class Quizzes extends Component {
                 D
                 <Form.Control
                   name="answeroptions4"
-                  readOnly={this.state.isDisable}
                   as="textarea"
                   row="1"
                   placeholder="Enter Answer option"
-                  value={this.state.answeroptions4}
+                  value={this.props.answeroptions4}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -139,7 +130,7 @@ class Quizzes extends Component {
                 <DropdownButton
                   as={InputGroup.Append}
                   variant="outline-secondary"
-                  title={this.state.answer}
+                  title={this.props.answer}
                   id="input-group-dropdown-2"
                 >
                   <Dropdown.Item

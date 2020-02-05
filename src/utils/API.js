@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default axios.create({
-  baseURL: "https://5dd3a2586625890014a6e8d6.mockapi.io/api/lms/",
-  responseType: "json"
+  baseURL: 'http://5dced77975f9360014c26528.mockapi.io/api/v1/',
+  responseType: 'json'
 });
