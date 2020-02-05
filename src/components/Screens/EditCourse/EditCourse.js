@@ -1,25 +1,25 @@
-import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
-import PropTypes from "prop-types";
-var parse = require("html-react-parser");
+import React, { Component, Fragment } from 'react';
+import { Container, Row, Col, Form } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+var parse = require('html-react-parser');
 
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
-import GFMDataProcessor from "@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor";
-import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+import GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
+import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 
-import Button from "components/CustomButton/CustomButton.js";
-import Card from "components/Card/Card.js";
-import Quizzes from "components/Quizzes/Quizzes.js";
-import axios from "axios";
-import API from "utils/API";
+import Button from 'components/CustomButton/CustomButton.js';
+import Card from 'components/Card/Card.js';
+import Quizzes from 'components/Quizzes/Quizzes.js';
+import axios from 'axios';
+import API from 'utils/API';
 
-var IFRAME_SRC = "//cdn.iframe.ly/api/iframe";
-var API_KEY = "9c95afb9bf715f866e621a";
+var IFRAME_SRC = '//cdn.iframe.ly/api/iframe';
+var API_KEY = '9c95afb9bf715f866e621a';
 
 var stringsSomeWithHtml = str => {
   return <Fragment>{str}</Fragment>;
@@ -32,7 +32,7 @@ function Markdown(editor) {
 
 const editorConfiguration = {
   plugins: [Essentials, Bold, Italic, Paragraph, MediaEmbed],
-  toolbar: ["bold", "italic", "mediaEmbed"],
+  toolbar: ['bold', 'italic', 'mediaEmbed'],
   mediaEmbed: {
     // Previews are always enabled if there’s a provider for a URL (below regex catches all URLs)
     // By default `previewsInData` are disabled, but let’s set it to `false` explicitely to be sure
@@ -41,7 +41,7 @@ const editorConfiguration = {
     providers: [
       {
         // hint: this is just for previews. Get actual HTML codes by making API calls from your CMS
-        name: "iframely previews",
+        name: 'iframely previews',
 
         // Match all URLs or just the ones you need:
         url: /.+/,
@@ -51,9 +51,9 @@ const editorConfiguration = {
 
           var iframeUrl =
             IFRAME_SRC +
-            "?app=1&api_key=" +
+            '?app=1&api_key=' +
             API_KEY +
-            "&url=" +
+            '&url=' +
             encodeURIComponent(url);
           // alternatively, use &key= instead of &api_key with the MD5 hash of your api_key
           // more about it: https://iframely.com/docs/allow-origins
@@ -64,9 +64,9 @@ const editorConfiguration = {
             '<div class="iframely-responsive">' +
             `<iframe src="${iframeUrl}" ` +
             'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
-            "</iframe>" +
-            "</div>" +
-            "</div>"
+            '</iframe>' +
+            '</div>' +
+            '</div>'
           );
         }
       }
@@ -78,12 +78,23 @@ class EditCourse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      description: "",
-      data: "<p>Let create your course<p>",
+      name: '',
+      description: '',
+      data: '',
       editor: ClassicEditor,
-      toHtml: "",
-      quizzes: []
+      toHtml: '',
+      quizzes: [
+        {
+          key: 0,
+          answer: 'A',
+          question: 'how are you?',
+          answeroptions1: '1',
+          answeroptions2: '2',
+          answeroptions3: '3',
+          answeroptions4: '4'
+        }
+      ],
+      isSummiting: false
     };
     this.child = React.createRef();
   }
@@ -98,24 +109,31 @@ class EditCourse extends Component {
 
   handleSumit = event => {
     event.preventDefault();
-    this.child.current.handleAddQuizz();
-
-    // const data = {
-    //   CourseName: "vankhai",
-    //   Description: "test",
-    //   Rate: 5,
-    //   Term: 1997,
-    //   Certification: "test",
-    //   Status: "test"
-    // };
-    // axios
-    //   .post("https://gamifi.herokuapp.com/courses", data)
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    this.setState({
+      isSummiting: true
+    });
+    const data = {
+      CourseName: this.state.name,
+      Description: this.state.description,
+      Content: this.state.data,
+      Rate: 5,
+      Term: 1997,
+      Certification: 'test',
+      Status: 'test'
+    };
+    axios
+      .post('https://5dced77975f9360014c26528.mockapi.io/api/v1/courses', data)
+      .then(response => {
+        console.log(response);
+      })
+      .then(
+        this.setState({
+          isSummiting: false
+        })
+      )
+      .catch(error => {
+        console.log(error);
+      });
     // var a = parse(this.state.data);
     // this.setState({ toHtml: a });
     // console.log(a);
@@ -125,46 +143,17 @@ class EditCourse extends Component {
   handleAddQuizz = e => {
     e.preventDefault();
     const quizz = {
-      question: "",
-      answer: "",
-      answeroptions1: "",
-      answeroptions2: "",
-      answeroptions3: "",
-      answeroptions4: ""
+      question: '',
+      answer: '',
+      answeroptions1: '',
+      answeroptions2: '',
+      answeroptions3: '',
+      answeroptions4: ''
     };
 
-    this.setState(state => {
-      const quizzes = state.quizzes.concat(quizz);
-
-      return {
-        quizzes
-      };
-    });
-  };
-
-  handleSaveQuizz = input => {
-    this.setState(state => {
-      const quizzes = state.quizzes.map((quizz, index) => {
-        console.log(index, input.index);
-        quizz => {};
-        if (index === input.index - 1) {
-          quizz.question = input.question;
-          quizz.answer = input.answer;
-          quizz.answeroptions1 = input.answeroptions1;
-          quizz.answeroptions2 = input.answeroptions2;
-          quizz.answeroptions3 = input.answeroptions3;
-          quizz.answeroptions4 = input.answeroptions4;
-          return quizz;
-        } else return quizz;
-      });
-
-      console.log("under are array quizzes");
-      console.log(quizzes);
-      return {
-        quizzes
-      };
-    });
-    console.log(this.state.quizzes);
+    this.setState(prevState => ({
+      quizzes: [...prevState.quizzes, quizz]
+    }));
   };
 
   handleChange = e => {
@@ -179,24 +168,39 @@ class EditCourse extends Component {
     // console.log(data);
   };
 
+  //handle input onchange
+  handleQuizzInputChange = (name, value, index) => {
+    this.setState(prevState => {
+      quizzes: prevState.quizzes.map((quizz, i) => {
+        i === index ? Object.assign(quizz, { [name]: value }) : quizz;
+      });
+    });
+    this.forceUpdate();
+  };
+
+  handleAnswer = (key, index) => {
+    const _name = 'quizzes[' + index + '].answer';
+    this.setState(prevState => {
+      quizzes: prevState.quizzes.map((quizz, i) =>
+        i === index ? { ...quizz, answer: key } : quizz
+      );
+    });
+  };
+
   componentDidMount() {
-    console.log(this.state.quizzes[0]);
-
     if (iframely) {
-      console.log("iframely work");
+      console.log('iframely work');
     }
-
-    console.log("oembed convert is working");
+    axios.get('https://5dced77975f9360014c26528.mockapi.io/api/v1/courses/1');
   }
 
   componentDidUpdate() {
-    document.querySelectorAll("figure").forEach(element => {
-      // Discard the static media preview from the database (empty the <div data-oembed-url="...">).
-      element.removeAttribute("class");
+    document.querySelectorAll('figure').forEach(element => {
+      element.removeAttribute('class');
     });
 
-    console.log(document.querySelectorAll("figure"));
-    console.log("oembed convert is working");
+    // console.log(document.querySelectorAll("figure"));
+    // console.log("oembed convert is working");
   }
   render() {
     return (
@@ -258,7 +262,7 @@ class EditCourse extends Component {
                             <Quizzes
                               ref={this.child}
                               key={index}
-                              index={index + 1}
+                              index={index}
                               answer={value.answer}
                               question={value.question}
                               answeroptions1={value.answeroptions1}
@@ -266,9 +270,11 @@ class EditCourse extends Component {
                               answeroptions3={value.answeroptions3}
                               answeroptions4={value.answeroptions4}
                               addNewQuizz={this.handleSaveQuizz}
+                              onAnswerChange={this.handleAnswer}
+                              onInputChange={this.handleQuizzInputChange}
                             />
                           ) : (
-                            "this is not good"
+                            'this is not good'
                           )}
                         </div>
                       ))}
@@ -285,9 +291,12 @@ class EditCourse extends Component {
                       fill
                       floatRight
                       type="submit"
-                      onClick={this.handleSumit}
+                      disabled={this.state.isSummiting}
+                      onClick={
+                        !this.state.isSummiting ? this.handleSumit : null
+                      }
                     >
-                      Save
+                      {this.state.isSummiting ? 'Loading' : 'Save'}
                     </Button>
                   </div>
                 }
