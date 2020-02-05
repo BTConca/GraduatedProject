@@ -4,6 +4,54 @@
   background-color: #ffffff;
   margin-bottom: 30px;
 
+  p {
+    margin: 0px;
+  }
+
+  .card-quizzes {
+    .form-label {
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      color: $black-color;
+      margin-bottom: 0px;
+    }
+    .input-group {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+  .form-texteditor {
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .iframely-responsive {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    position: relative;
+    padding-bottom: 56.25%;
+    margin-bottom: 30px;
+  }
+
+  .iframely-responsive > * {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 0;
+  }
+
+  .card-block {
+    p {
+      display: block;
+    }
+  }
   .image {
     width: 100%;
     overflow: hidden;
@@ -37,9 +85,7 @@
   &:hover .filter {
     @include opacity(1);
   }
-  .form-texteditor {
-    padding-bottom: 10px;
-  }
+
   .btn-hover {
     @include opacity(0);
   }
@@ -64,8 +110,9 @@
     }
   }
 
-  label {
-    font-size: $font-size-small;
+  .form-label {
+    font-size: $font-size-h4;
+    color: $black-color;
     margin-bottom: 5px;
     text-transform: uppercase;
   }
@@ -73,7 +120,8 @@
   .title {
     margin: $none;
     color: $black-color;
-    font-weight: $font-weight-light;
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
   }
   .avatar {
     width: 30px;
@@ -127,23 +175,6 @@
     background-color: $medium-gray;
     content: "";
     position: absolute;
-  }
-
-  .ct-chart {
-    margin: 30px 0 30px;
-    height: 245px;
-  }
-
-  .table {
-    tbody td:first-child,
-    thead th:first-child {
-      padding-left: 15px;
-    }
-
-    tbody td:last-child,
-    thead th:last-child {
-      padding-right: 15px;
-    }
   }
 
   .alert {
