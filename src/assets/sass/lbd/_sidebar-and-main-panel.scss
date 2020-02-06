@@ -44,7 +44,7 @@
       margin: 10px 10px;
       color: $white-color;
       line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     a.logo-mini {
@@ -94,6 +94,10 @@
 
   .nav {
     margin-top: 20px;
+
+    .nav-link {
+      width: 230px;
+    }
 
     li {
       > a {
@@ -155,7 +159,7 @@ body > .navbar-collapse {
       margin: 10px 10px;
       color: $white-color;
       line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .simple-text {
@@ -187,7 +191,7 @@ body > .navbar-collapse {
   &:after,
   &:before {
     display: block;
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 100%;
@@ -212,22 +216,22 @@ body > .navbar-collapse {
     opacity: 0.77;
   }
 
-  &[data-color="blue"]:after {
+  &[data-color='blue']:after {
     @include icon-gradient($new-dark-blue, $blue-color-bottom);
   }
-  &[data-color="azure"]:after {
+  &[data-color='azure']:after {
     @include icon-gradient($new-blue, $azure-color-bottom);
   }
-  &[data-color="green"]:after {
+  &[data-color='green']:after {
     @include icon-gradient($new-green, $green-color-bottom);
   }
-  &[data-color="orange"]:after {
+  &[data-color='orange']:after {
     @include icon-gradient($new-orange, $orange-color-bottom);
   }
-  &[data-color="red"]:after {
+  &[data-color='red']:after {
     @include icon-gradient($new-red, $red-color-bottom);
   }
-  &[data-color="purple"]:after {
+  &[data-color='purple']:after {
     @include icon-gradient($new-purple, $purple-color-bottom);
   }
 }

@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import Course from 'components/Courses/Course.js';
 import Card from 'components/Card/Card.js';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class Courses extends Component {
   render() {
-    console.log('courses.js');
-    console.log(this.props.CoursesList);
     const list = this.props.CoursesList;
-    list.map(item => console.log(item));
 
     let count = 0;
 
@@ -22,7 +20,18 @@ export class Courses extends Component {
               <Row>
                 {list.map((course, index) => (
                   <Col lg={3} md={4} sm={6} key={course.CourseID}>
-                    <div onClick={() => alert('Clicked' + index)}>
+                    <Link
+                      to={{
+                        pathname: '/mentor/courses/' + course.CourseID,
+                        courseProps: {
+                          name: course.CourseName,
+                          content: course.Content
+                        },
+                        state: {
+                          course
+                        }
+                      }}
+                    >
                       <Card
                         content={
                           <Course
@@ -37,7 +46,7 @@ export class Courses extends Component {
                           />
                         }
                       />
-                    </div>
+                    </Link>
                   </Col>
                 ))}
               </Row>

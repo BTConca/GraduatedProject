@@ -1,7 +1,8 @@
 import EditCourse from 'components/Screens/Editcourse/Editcourse.js';
 import Dashboard from 'components/Screens/Dashboard/Dashboard.js';
 import UserHome from 'components/Screens/UserHome/UserHome.js';
-import ScreensCourses from './components/Screens/Courses/ScreensCourses';
+import ScreensCourses from 'components/Screens/Courses/ScreensCourses.js';
+import ScreenCourseView from 'components/Screens/Courses/ScreensCourseView.js';
 
 const routes = [
   {
@@ -24,6 +25,13 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    icon: 'pe-7s-graph',
+    layout: '/mentor'
+  },
+  {
+    path: '/courses/:courseID',
+    name: 'Course Details',
+    component: ScreenCourseView,
     icon: 'pe-7s-graph',
     layout: '/mentor'
   },

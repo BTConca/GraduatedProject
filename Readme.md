@@ -8,4 +8,8 @@
 
 ### _Top 50 articles about **React** in 2019_
 
+<<<<<<< HEAD
 [Here](https://medium.mybridge.co/learn-react-js-from-top-50-articles-for-the-past-year-v-2019-baaacfc521c)
+=======
+[Here](https://medium.mybridge.co/learn-react-js-from-top-50-articles-for-the-past-year-v-2019-baaacfc521c)
+>>>>>>> master

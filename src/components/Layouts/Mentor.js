@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import Sidebar from "components/Sidebar/Sidebar";
-import { style } from "variables/Variables.js";
-import NotificationSystem from "react-notification-system";
-import AdminNavbar from "components/Navbars/AdminNavbar";
-import image from "assets/img/sidebar-3.jpg";
+import Sidebar from 'components/Sidebar/Sidebar';
+import { style } from 'variables/Variables.js';
+import NotificationSystem from 'react-notification-system';
+import AdminNavbar from 'components/Navbars/AdminNavbar';
+import image from 'assets/img/sidebar-3.jpg';
 
-import routes from "routes.js";
+import routes from 'routes.js';
 
 class Mentor extends Component {
   constructor(props) {
@@ -15,9 +15,9 @@ class Mentor extends Component {
     this.state = {
       _notificationSystem: null,
       image: image,
-      color: "black",
+      color: 'black',
       hasImage: true,
-      fixedClasses: "dropdown show-dropdown open"
+      fixedClasses: 'dropdown show-dropdown open'
     };
   }
 
@@ -26,16 +26,16 @@ class Mentor extends Component {
     var level;
     switch (color) {
       case 1:
-        level = "sucess";
+        level = 'sucess';
         break;
       case 2:
-        level = "warning";
+        level = 'warning';
         break;
       case 3:
-        level = "error";
+        level = 'error';
         break;
       case 4:
-        level = "info";
+        level = 'info';
         break;
     }
 
@@ -55,7 +55,7 @@ class Mentor extends Component {
   getRoutes = routes => {
     return routes
       ? routes.map((prop, key) => {
-          if (prop.layout === "/mentor") {
+          if (prop.layout === '/mentor') {
             return (
               <Route
                 path={prop.layout + prop.path}
@@ -82,11 +82,14 @@ class Mentor extends Component {
   };
 
   render() {
+    console.log('mentor');
+    console.log(this.props.location);
     return (
       <div className="wrapper">
         <NotificationSystem ref="notificationSystem" style={style} />
         <Sidebar
           {...this.props}
+          routes={routes}
           image={this.state.image}
           color={this.state.color}
           hasImage={this.state.hasImage}
